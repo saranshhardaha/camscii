@@ -1,7 +1,11 @@
+import { inject } from "@vercel/analytics";
 import { gridFor, asciiText } from "./asciify.js";
 import { initControls } from "./controls.js";
 import { drawAscii, cellMetrics } from "./render.js";
 import { createRecorder, recordingSupported } from "./recorder.js";
+
+// Vercel Web Analytics (no-op until deployed on Vercel).
+inject();
 
 // ---- elements ----
 const video = document.getElementById("video"); // camera + uploaded video
