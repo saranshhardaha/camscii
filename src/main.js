@@ -4,8 +4,12 @@ import { initControls } from "./controls.js";
 import { drawAscii, cellMetrics } from "./render.js";
 import { createRecorder, recordingSupported } from "./recorder.js";
 
-// Vercel Web Analytics (no-op until deployed on Vercel).
-inject();
+// Vercel Web Analytics — "Other framework" integration for a vanilla Vite app
+// (https://vercel.com/docs/analytics/quickstart, "Other" tab). Mode is keyed to
+// Vite's build env so local dev uses the debug script and production loads
+// /_vercel/insights/script.js. Reports once deployed on Vercel with Web
+// Analytics enabled in the project dashboard.
+inject({ mode: import.meta.env.PROD ? "production" : "development" });
 
 // ---- elements ----
 const video = document.getElementById("video"); // camera + uploaded video
