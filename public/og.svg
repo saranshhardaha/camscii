@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  <rect x="1" y="1" width="1198" height="628" fill="none" stroke="#1a1a1e" stroke-width="2"/>
+  <text x="80" y="300" font-family="ui-monospace, Menlo, monospace" font-size="120" font-weight="700"
+        letter-spacing="14" fill="#00ff88">CAMSCII</text>
+  <text x="84" y="372" font-family="ui-monospace, Menlo, monospace" font-size="34" letter-spacing="6"
+        fill="#d7ffd7">Live camera → ASCII art, real-time in your browser</text>
+  <text x="84" y="430" font-family="ui-monospace, Menlo, monospace" font-size="24" letter-spacing="4"
+        fill="#8a8a8a">detail · color · mirror · invert — fully client-side &amp; private</text>
+  <text x="80" y="560" font-family="ui-monospace, Menlo, monospace" font-size="22" fill="#00b863">
+    @%#*+=-:. .:-=+*#%@  ·  built by saranshh.dev
+  </text>
+</svg>

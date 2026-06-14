@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- Primary SEO -->
+    <title>Camscii — Webcam, Image &amp; Video to ASCII Art · Record &amp; Export</title>
+    <meta
+      name="description"
+      content="Camscii converts your webcam, images and videos into ASCII art in real time, right in the browser. Tune detail, character ramps, color, mirror and invert — then record to WebM or export PNG and TXT. Fully client-side and private: nothing is ever uploaded."
+    />
+    <meta
+      name="keywords"
+      content="ASCII art generator, webcam to ASCII, image to ASCII, video to ASCII, real-time ASCII, ASCII video recorder, ASCII art converter, ASCII camera, browser ASCII art, ASCII cam"
+    />
+    <meta name="author" content="saranshh.dev" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="canonical" href="https://camscii.saranshh.dev/" />
+
+    <!-- Icons & manifest -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Camscii" />
+    <meta property="og:title" content="Camscii — Webcam, Image & Video to ASCII Art" />
+    <meta
+      property="og:description"
+      content="Convert your webcam, images and videos into real-time ASCII art, then record to WebM or export PNG/TXT. Runs fully in the browser — nothing leaves your device."
+    />
+    <meta property="og:url" content="https://camscii.saranshh.dev/" />
+    <meta property="og:image" content="https://camscii.saranshh.dev/og.svg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Camscii — Webcam, Image & Video to ASCII Art" />
+    <meta
+      name="twitter:description"
+      content="Convert webcam, images and videos into real-time ASCII art. Record to WebM, export PNG/TXT. Private and install-free."
+    />
+    <meta name="twitter:image" content="https://camscii.saranshh.dev/og.svg" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Camscii",
+        "description": "Convert your webcam, images and videos into real-time ASCII art in the browser, then record to WebM or export PNG and TXT. Fully client-side and private.",
+        "url": "https://camscii.saranshh.dev/",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires a browser with camera access (getUserMedia).",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Saransh", "url": "https://saranshh.dev" }
+      }
+    </script>
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <header class="bar">
+        <div class="brand">
+          <h1>CAMSCII</h1>
+          <span class="tagline">camera · image · video → ascii · record &amp; export</span>
+        </div>
+
+        <div class="controls">
+          <label class="field">
+            <span class="field-label">Detail</span>
+            <input id="resolution" type="range" min="40" max="200" value="120" step="4" />
+          </label>
+
+          <label class="field">
+            <span class="field-label">Ramp</span>
+            <select id="ramp">
+              <option value=" .:-=+*#%@">classic</option>
+              <option value=" .'`^,:;Il!i&gt;&lt;~+_-?]}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&amp;8%B@$" selected>dense</option>
+              <option value=" .oO0@">blocks</option>
+              <option value=" ░▒▓█">shade</option>
+            </select>
+          </label>
+
+          <div class="toggles">
+            <label class="switch">
+              <input id="color" type="checkbox" />
+              <span class="track"></span>
+              <span class="switch-label">Color</span>
+            </label>
+            <label class="switch">
+              <input id="mirror" type="checkbox" checked />
+              <span class="track"></span>
+              <span class="switch-label">Mirror</span>
+            </label>
+            <label class="switch">
+              <input id="invert" type="checkbox" />
+              <span class="track"></span>
+              <span class="switch-label">Invert</span>
+            </label>
+          </div>
+
+        </div>
+      </header>
+
+      <div class="toolbar">
+        <div class="group">
+          <button id="cam" type="button" class="btn-primary">
+            <span class="dot"></span><span class="btn-text">Camera</span>
+          </button>
+          <button id="upload" type="button" class="btn-ghost">↑ Upload image / video</button>
+          <input id="file" type="file" accept="image/*,video/*" hidden />
+        </div>
+        <div class="group">
+          <button id="record" type="button" class="btn-ghost" disabled>
+            <span class="rec-dot"></span><span class="rec-text">Record</span>
+          </button>
+          <button id="snap" type="button" class="btn-ghost" disabled>Save PNG</button>
+          <button id="savetxt" type="button" class="btn-ghost" disabled>Save .txt</button>
+        </div>
+      </div>
+
+      <div id="screen" aria-label="ASCII output">
+        <canvas id="output" hidden></canvas>
+        <p id="message">Press “Camera” or upload an image / video.</p>
+      </div>
+
+      <div class="statusbar">
+        <p id="status" class="status"></p>
+        <footer class="site-footer">
+          Built by
+          <a href="https://saranshh.dev" target="_blank" rel="noopener noreferrer">saranshh.dev</a>
+        </footer>
+      </div>
+    </main>
+
+    <!-- Hidden capture pipeline -->
+    <video id="video" playsinline muted hidden></video>
+    <img id="uimg" alt="" hidden />
+    <canvas id="sampler" hidden></canvas>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
